@@ -1,0 +1,53 @@
+// 字号
+.font-24 {
+  font-size: 24rpx;
+}
+
+.font-28 {
+  font-size: 28rpx;
+}
+
+.font-30 {
+  font-size: 30rpx;
+}
+
+.font-32 {
+  font-size: 32rpx;
+}
+
+.font-36 {
+  font-size: 36rpx;
+}
+
+.font-40 {
+  font-size: 40rpx;
+}
+
+.font-44 {
+  font-size: 44rpx;
+}
+
+// 字体颜色
+.color-333 {
+  color: #333;
+}
+
+.color-666 {
+  color: #666;
+}
+
+.color-999 {
+  color: #999;
+}
+
+.line1 {
+  @include multiline(1);
+}
+
+.line2 {
+  @include multiline(2);
+}
+
+.red {
+  color: #eb3a25;
+}

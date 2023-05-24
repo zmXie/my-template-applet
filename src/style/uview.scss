@@ -1,0 +1,28 @@
+// 统一定制checkbox,radio
+.u-checkbox,
+.u-radio {
+  align-items: flex-start !important;
+  max-width: 100%;
+}
+.u-radio__icon-wrap {
+  margin-right: 20rpx !important;
+}
+.u-checkbox__text,
+.u-radio__text {
+  line-height: 1.4 !important;
+}
+.u-checkbox-group,
+.u-radio-group {
+  margin-top: 16rpx;
+  > view {
+    padding: 16rpx 0;
+  }
+}
+.u-checkbox-group--row,
+.u-radio-group--row {
+  flex-wrap: wrap;
+  > view {
+    padding-right: 40rpx;
+    min-width: 175rpx;
+  }
+}
