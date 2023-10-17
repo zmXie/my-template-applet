@@ -155,7 +155,7 @@ function getUserProfile() {
         console.log(err);
         reject(new Error(err?.errMsg || '获取用户信息失败'));
       },
-      complete: () => {}
+      complete: () => { }
     });
     //#endif
   });
@@ -251,11 +251,6 @@ async function handleLoginSuccess(value) {
   const { token, refreshToken } = value;
   // 存储token
   await store.dispatch('jwt/set', { token, refreshToken });
-  // 绑定关系
-  await store.dispatch('app/addDoctorEmpRelate');
-  // 查询档案资料
-  const appid = store.getters['app/appId'];
-  await store.dispatch('user/loadRecord', appid);
 }
 
 export const uniAuth = {

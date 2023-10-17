@@ -1,10 +1,8 @@
 /**
  * 用户信息相关的全局操作或数据
  */
-// import basicApi from '@/api/modules/basic';
 
 import { data } from '@/libs/util.jwt.js';
-import dpApi from '@/api/modules/dp';
 
 export default {
   namespaced: true,
@@ -31,25 +29,6 @@ export default {
       });
     },
     /**
-     * @description 设置用户数据
-     * @param {Object} context
-     * @param {*} userInfo userInfo
-     */
-    loadRecord({ state, commit }, appid) {
-      return new Promise(async (resolve, reject) => {
-        try {
-          // 获取用户基础信息
-          const value = await dpApi.getDefaultRecord({ appid });
-          if (value?.itemId) {
-            state.record = value;
-          }
-          resolve();
-        } catch (error) {
-          reject();
-        }
-      });
-    },
-    /**
      * @description 清除用户数据
      * @param state
      * @param dispatch
@@ -61,7 +40,6 @@ export default {
         state.record = {};
         // 清空jwt
         await dispatch('jwt/clear', {}, { root: true });
-        // end
         resolve();
       });
     }
