@@ -45,34 +45,39 @@ const request = function (config = {}) {
   if (!config.isHideLoading) {
     uni.showLoading({ title: '请稍等...', mask: true });
   }
-  return uni
-    .request(config)
-    .then((arrData) => {
-      uni.hideLoading();
-      let [err, res] = arrData;
+  return uni.request(config).then((arrData) => {
+    console.log('请求参数：', config.method, config.url, config.data || '');
+    uni.hideLoading();
+    let [err, res] = arrData;
+    if (res) {
+      // 请求成功
       let { statusCode, data } = res;
-      console.log('请求参数：', config.method, config.url, config.data || '');
       console.log('请求结果：', data);
-
-      // 可根据接口逻辑进行调整
       if (statusCode === 200 && data.success !== false) {
         return data;
       }
-      return Promise.reject(res);
-    })
-    .catch((res) => {
-      uni.hideLoading();
-      let { data, statusCode, code } = res;
+      // 业务失败相关处理
+      const { code, message } = data;
       if (!config.noToast) {
-        uni.showToast({ title: data.message || `${statusCode}：请求错误`, icon: 'none' });
+        uni.showToast({ title: message || `${statusCode}：请求错误`, icon: 'none' });
       }
-      if (code === '9992' || code === '2005') {
-        // token过期，清除数据，跳转登录页面
+      // token过期 || 用户未登录，清除数据，跳转登录页面
+      if (code === 'A0009' || code === 'A0008') {
         store.dispatch('user/clear');
-        uni.redirectTo({ url: '/pages/login/index' });
+        uni.redirectTo({ url: '/pages/login/mobile-login/index' });
       }
-      return Promise.reject(data);
-    });
+      return Promise.reject(res);
+    } else {
+      // 请求失败
+      if (!config.noToast) {
+        uni.showToast({ title: '网络连接失败，请稍后再试', icon: 'none' });
+      }
+      console.log('请求结果：', err);
+      return Promise.reject(err);
+    }
+  }).catch((err) => {
+    return Promise.reject(err);
+  });
 };
 
 export default request;
